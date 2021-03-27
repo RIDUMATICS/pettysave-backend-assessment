@@ -1,12 +1,7 @@
 /* eslint-disable no-undef */
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const http = require('http');
-const app = require('../app');
-
-// setup different sever for test
-const server = http.createServer(app);
-server.listen('2000');
+const server = require('./test_sever');
 
 chai.use(chaiHttp);
 chai.should();
