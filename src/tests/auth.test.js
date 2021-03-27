@@ -28,7 +28,7 @@ describe('Authentication Route', () => {
       });
   });
 
-  it('should throw an error if user already exists', (done) => {
+  it('should throw an error if already existed user try to sign up', (done) => {
     chai
       .request(server)
       .post('/auth/signup')

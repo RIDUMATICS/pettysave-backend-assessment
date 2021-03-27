@@ -18,6 +18,7 @@ const task = {
 };
 
 let token;
+let taskId;
 
 describe('User login', () => {
   it('should login user', (done) => {
@@ -41,6 +42,20 @@ describe('Tasks', () => {
       .send(task)
       .end((err, res) => {
         res.should.have.status(201);
+        res.body.should.be.a('object');
+        taskId = res.body.data.task.id;
+        done();
+      });
+  });
+
+  it('should be able to update a task', (done) => {
+    chai
+      .request(server)
+      .patch(`/api/v1/tasks/${taskId}`)
+      .set('Authorization', token)
+      .send({ status: 'completed' })
+      .end((err, res) => {
+        res.should.have.status(200);
         res.body.should.be.a('object');
         done();
       });
