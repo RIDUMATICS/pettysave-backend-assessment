@@ -60,4 +60,17 @@ describe('Tasks', () => {
         done();
       });
   });
+
+  it('should be able to view a task using its ID', (done) => {
+    chai
+      .request(server)
+      .get(`/api/v1/tasks/${taskId}`)
+      .set('Authorization', token)
+      .send({ status: 'completed' })
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
 });
