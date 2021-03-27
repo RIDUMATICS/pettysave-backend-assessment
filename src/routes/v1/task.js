@@ -19,4 +19,9 @@ router.patch(
   validationMiddleware(updateTaskSchema),
   TaskController.updateTask
 );
+
+router.get(
+  '/tasks/:id',
+  TaskController.getTask
+);
 module.exports = router;
