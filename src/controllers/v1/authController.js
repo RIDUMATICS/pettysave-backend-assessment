@@ -2,7 +2,7 @@ const response = require('../../utils/ResponseGenerator');
 const { User } = require('../../database/models');
 
 /**
- * user controller performs user signup, sign-in, verify 2FA token and create staff logic
+ * auth controller performs user signup, sign-in logic
  */
 class AuthController {
   /**

@@ -1,10 +1,10 @@
 const { Router } = require('express');
-const AuthController = require('../../controllers/v1/authController');
-const validationMiddleware = require('../../Middleware/validationMiddleware');
+const AuthController = require('../controllers/v1/authController');
+const validationMiddleware = require('../Middleware/validationMiddleware');
 const {
   createUserSchema,
   loginUserSchema,
-} = require('../../validations/authSchemas');
+} = require('../validations/authSchemas');
 
 const router = Router();
 
