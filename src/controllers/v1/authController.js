@@ -13,7 +13,8 @@ class AuthController {
    */
   static async createUser(req, res) {
     try {
-      const user = await User.findOne({ where: { email: req.body.email } });
+      const email = req.body.email.toLowerCase();
+      const user = await User.findOne({ where: { email } });
       if (user) {
         return response.sendError(res, 409, 'Email has already been taken.');
       }
