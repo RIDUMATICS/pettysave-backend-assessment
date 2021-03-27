@@ -1,7 +1,10 @@
 const { Router } = require('express');
 const TaskController = require('../../controllers/v1/taskController');
 const validationMiddleware = require('../../Middleware/validationMiddleware');
-const { createTaskSchema } = require('../../validations/TaskSchema');
+const {
+  createTaskSchema,
+  updateTaskSchema,
+} = require('../../validations/TaskSchema');
 
 const router = Router();
 
@@ -11,4 +14,9 @@ router.post(
   TaskController.createTask
 );
 
+router.patch(
+  '/tasks/:id',
+  validationMiddleware(updateTaskSchema),
+  TaskController.updateTask
+);
 module.exports = router;
