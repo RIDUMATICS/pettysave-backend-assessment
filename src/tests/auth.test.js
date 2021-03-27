@@ -45,4 +45,44 @@ describe('Authentication Route', () => {
         done();
       });
   });
+
+  it('should login a user if exist', (done) => {
+    chai
+      .request(server)
+      .post('/auth/login')
+      .send(user)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+
+  it('should throw an error if email does not exist (incorrect)', (done) => {
+    user.email = 'unknown@gmail.com';
+    chai
+      .request(server)
+      .post('/auth/login')
+      .send(user)
+      .end((err, res) => {
+        res.should.have.status(404);
+        res.body.should.be.a('object');
+        res.body.should.have.property('error');
+        done();
+      });
+  });
+
+  it('should throw an error if password is incorrect', (done) => {
+    user.password = 'hacking_123';
+    chai
+      .request(server)
+      .post('/auth/login')
+      .send(user)
+      .end((err, res) => {
+        res.should.have.status(404);
+        res.body.should.be.a('object');
+        res.body.should.have.property('error');
+        done();
+      });
+  });
 });
