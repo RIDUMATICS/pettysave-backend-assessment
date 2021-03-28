@@ -66,10 +66,43 @@ describe('Tasks', () => {
       .request(server)
       .get(`/api/v1/tasks/${taskId}`)
       .set('Authorization', token)
-      .send({ status: 'completed' })
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('object');
+        done();
+      });
+  });
+
+  it('should be able to view all the tasks he/she have created.', (done) => {
+    chai
+      .request(server)
+      .get('/api/v1/tasks')
+      .set('Authorization', token)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('data');
+        res.body.data.should.be.a('object');
+        res.body.data.should.have.property('tasks');
+        res.body.data.tasks.should.be.a('array');
+        done();
+      });
+  });
+
+  it('should be able to filter through tasks using task status.', (done) => {
+    chai
+      .request(server)
+      .get('/api/v1/tasks')
+      .query({ status: 'completed' }) // passing status as a query
+      .set('Authorization', token)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('data');
+        res.body.data.should.be.a('object');
+        res.body.data.should.have.property('tasks');
+        res.body.data.tasks.should.be.a('array');
+        res.body.data.tasks[0].should.have.property('status').eql('completed');
         done();
       });
   });
