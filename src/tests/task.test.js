@@ -27,7 +27,7 @@ describe('User login', () => {
       .post('/auth/login')
       .send(user)
       .end((err, res) => {
-        token = res.body.data.token;
+        token = `Bearer ${res.body.data.token}`;
         done();
       });
   });
