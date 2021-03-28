@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+const { object: obj, string } = require('yup');
 const response = require('../../utils/ResponseGenerator');
 const { Task } = require('../../database/models');
 const { User } = require('../../database/models');
@@ -96,6 +97,39 @@ class TaskController {
     } catch (error) {
       error.status = error.status || 500;
       response.sendError(res, error.status, error.message);
+    }
+  }
+
+  /**
+   * @description Fetch all user's task
+   * @param {object} req express request object
+   * @param {object} res express request object
+   * @returns {json} json
+   * @memberof TaskController
+   */
+  static async getAllTasks(req, res) {
+    try {
+      // schema for req.params
+      const schema = obj({
+        status: string().oneOf(['pending', 'in-progress', 'completed']),
+      });
+
+      await schema.validate(req.query);
+
+      const opts = { user_id: req.user.id };
+
+      if (req.query.status) {
+        // check if status is not undefine
+        opts.status = req.query.status;
+      }
+
+      const tasks = await Task.findAll({
+        where: opts,
+      });
+
+      response.sendSuccess(res, 200, { tasks }, 'Task fetched successfully');
+    } catch ({ errors }) {
+      response.sendError(res, 400, errors);
     }
   }
 }
