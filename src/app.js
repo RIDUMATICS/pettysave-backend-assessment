@@ -3,6 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const passport = require('passport');
+const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const authRouter = require('./routes/auth');
 const taskRouter = require('./routes/v1/task');
@@ -11,6 +12,7 @@ const swaggerDocumentV1 = require('../swagger.v1.json');
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(helmet());
@@ -21,6 +23,10 @@ passportConfig(passport);
 app.use('/auth', authRouter);
 
 app.use('/api/v1', taskRouter);
+
+app.get('/', (req, res) => {
+  res.redirect('/api/v1/docs');
+});
 
 // route for swagger documentation
 app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentV1));

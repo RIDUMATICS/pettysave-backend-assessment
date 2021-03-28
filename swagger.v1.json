@@ -8,10 +8,11 @@
     "version" : "1.0.0"
   },
   "servers" : [ {
-    "url" : "http://localhost:5000",
-    "description": "Development server"
-  }, {
     "url" : "https://pettysave-intern-api.herokuapp.com",
+    "description": "Production server"
+  },
+  {
+    "url" : "http://localhost:5000",
     "description": "Development server"
   }
  ],
