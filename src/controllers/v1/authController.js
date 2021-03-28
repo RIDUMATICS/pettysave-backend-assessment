@@ -51,7 +51,6 @@ class AuthController {
       const user = await User.findOne({
         where: { email: email.toLowerCase() },
       });
-
       // if user exits
       if (user) {
         const isValid = await user.validatePassword(password);
@@ -65,13 +64,13 @@ class AuthController {
             'LogIn was successful'
           );
         }
+      } else {
+        const error = new Error(
+          'Email or password you entered did not match our records'
+        );
+        error.status = 404;
+        throw error;
       }
-
-      const error = new Error(
-        'Email or password you entered did not match our records'
-      );
-      error.status = 404;
-      throw error;
     } catch (error) {
       error.status = error.status || 500;
       response.sendError(res, error.status, error.message);

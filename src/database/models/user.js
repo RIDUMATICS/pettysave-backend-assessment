@@ -34,10 +34,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     generateToken() {
       const payload = { id: this.id };
-      const token = jwt.sign(payload, process.env.secretOrPrivateKey, {
+      return jwt.sign(payload, process.env.secretOrPrivateKey, {
         expiresIn: '24h',
       });
-      return `Bearer ${token}`;
     }
 
     /**
