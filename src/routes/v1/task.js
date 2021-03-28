@@ -20,8 +20,7 @@ router.patch(
   TaskController.updateTask
 );
 
-router.get(
-  '/tasks/:id',
-  TaskController.getTask
-);
+router.get('/tasks/:id', TaskController.getTask);
+
+router.get('/tasks', TaskController.getAllTasks);
 module.exports = router;
